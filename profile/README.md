@@ -1,13 +1,21 @@
+# GTCX Protocol Ecosystem
+
+A public home for the GTCX protocols, reference services, and open‑source platforms.
+
 Updated: 2025-09-02
 
-## What is GTCX?
-GTCX is an open protocol stack for trustworthy global trade. It focuses on verifiable events, culturally aware intelligence, and practical tools that work inclusively across regions.
+## Why GTCX
+GTCX is an open protocol stack for trustworthy global trade. It prioritizes verifiable events, culturally aware intelligence, and practical tools that work across regions, with a focus on the Global South.
 
 ## Protocols (foundation)
-Core protocol specifications live in `gtcx-ecosystem-research/02-protocol-specifications/`.
+Canonical specifications live in the research repo:
 - PANX Oracle Consensus — role‑weighted consensus, event‑type thresholds, auditable proofs
 - Governance/Compliance/Identity — building blocks for compliant trade flows
-- Transport and data contracts — JSON Schema with versioned `$id`
+- Transport & data contracts — JSON Schema with versioned `$id`
+
+Key specs:
+- PANX Oracle Consensus — https://github.com/gtcx-protocol/gtcx-ecosystem-research/tree/main/02-protocol-specifications/l1-core-protocols
+- AGI / Authenticated Global Intelligence — https://github.com/gtcx-protocol/gtcx-ecosystem-research/tree/main/03-intelligence-systems
 
 ```mermaid
 flowchart TD
@@ -17,9 +25,9 @@ flowchart TD
 ```
 
 ## Three‑tier architecture
-1) Protocols — specifications and data contracts (research repo)
-2) Reference services — PANX, Cortex, ANISA (this org)
-3) Platforms & apps — open‑source frontends, terminals, and integrations
+1) Protocols — specifications and data contracts (research)
+2) Reference services — PANX, ANISA, Cortex (services)
+3) Platforms & apps — terminals, dashboards, integrations (platforms)
 
 ```mermaid
 flowchart LR
@@ -43,33 +51,38 @@ flowchart LR
   S3 --> UI1
   S1 --> UI1
   UI1 --> Communities
+```
 
-## Reference services (live repos)
-- PANX (Oracle/Verification): `gtcx-ecosystem-cognitive/panx` — consensus, proofs, forward to Cortex
-- Cortex (Analytics): `gtcx-ecosystem-cognitive/cortex` — ingest, summary, anomalies
-- ANISA (Cultural Intelligence): `gtcx-ecosystem-anisa` — analyze/assess endpoints for enrichment
+## Reference services (live)
+- PANX (Oracle/Verification) — consensus, proofs, forward to Cortex
+  - https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/panx
+- Cortex (Analytics) — ingest, summary, anomalies
+  - https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/cortex
+- ANISA (Cultural Intelligence) — analyze/assess endpoints for enrichment
+  - https://github.com/gtcx-protocol/gtcx-ecosystem-anisa
 
 Each service includes: README, user/agent guides, runbooks, deploy guides, JSON Schemas, and changelogs.
 
-## Open‑source platforms & tooling
-- Terminal & UI shells — operator dashboards and community views (repos under `gtcx-ecosystem-platforms/`)
-- APIs & gateways — shared adapters and routing (`gtcx-ecosystem-api-gateway/`)
-- Research & specs — canonical protocol drafts and design notes (`gtcx-ecosystem-research/`)
+## Open‑source platforms
+- Platform UIs (terminal/dashboards) — https://github.com/gtcx-protocol/gtcx-ecosystem-platforms
+- API gateway/adapters — https://github.com/gtcx-protocol/gtcx-ecosystem-api-gateway
+- Research & specs — https://github.com/gtcx-protocol/gtcx-ecosystem-research
 
 ## Contracts and versioning
 - JSON Schema with `$id` across services
 - Response header `X-Contract-Version`
-- Compatibility checks included in repos (`contracts_compat_check.py`)
+- Compatibility checks included (`contracts_compat_check.py` in cognitive repo)
 
-## Deploy
-- Quickstart (VM + Docker Compose) in PANX/Cortex/ANISA READMEs
-- Helm charts & GKE Autopilot (planned)
+## Quickstart
+- PANX service — https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/panx
+- Cortex mock — https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/cortex
+- ANISA API — https://github.com/gtcx-protocol/gtcx-ecosystem-anisa
 
 ## Roadmap (high‑level)
 - Protocol hardening and specification snapshots
 - Schema‑first development with version guarantees
 - Managed Postgres/Timescale persistence and retention
-- Observability: metrics, dashboards, and alerting
+- Observability: metrics, dashboards, alerting
 - Agentic behaviors: PANX (borderline re‑verify plans), Cortex (watchers & action proposals)
 
 ## Community
