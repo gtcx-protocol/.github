@@ -66,24 +66,23 @@ flowchart TD
 - AGX (Authenticated Global Exchange): `research/02-protocol-specifications/l3-exchange-layer/agx-authenticated-global-exchange.md`
 
 ### Verification layers → platforms (visual)
-```mermaid
 flowchart LR
-  subgraph VP[Verification Protocols]
-    TP[TradePass]
-    GCI[GCI]
-    GT[GeoTag]
-    VM[VaultMark]
-    PVP[PvP]
+  subgraph VP["Verification Protocols"]
+    TP["TradePass"]
+    GCI["GCI"]
+    GT["GeoTag"]
+    VM["VaultMark"]
+    PVP["PvP"]
   end
-  subgraph RS[Reference Services]
-    PANX[PANX (Verification)]
-    ANISA[ANISA (Cultural)]
-    CORTEX[Cortex (Analytics)]
+  subgraph RS["Reference Services"]
+    PANX["PANX Verification"]
+    ANISA["ANISA Cultural"]
+    CORTEX["Cortex Analytics"]
   end
-  subgraph PL[Platforms]
-    CRX[CRX Regulatory]
-    SGX[SGX Exchange]
-    AGX[AGX Global]
+  subgraph PL["Platforms"]
+    CRX["CRX Regulatory"]
+    SGX["SGX Exchange"]
+    AGX["AGX Global"]
   end
   TP --> PANX
   GCI --> PANX
@@ -95,7 +94,6 @@ flowchart LR
   PANX --> CRX
   PANX --> SGX
   PANX --> AGX
-```
 
 ## Five flagship use cases
 - Permit issuance: GCI + TradePass + VaultMark; hours instead of weeks
