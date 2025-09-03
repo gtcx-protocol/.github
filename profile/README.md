@@ -10,10 +10,12 @@ Public home for the GTCX verification protocols and sovereign platforms.
 
 Last updated: 2025‑09‑03 08:00Z
 
-## Table of contents
-- Executive summary
+## Table of contents 🧭
+- Executive summary ✨
 - Who this is for
-- Day in the life
+ - What is needed for trade (and why)
+- Three‑tier architecture (overview) 🏗️
+- Day in the life 📽️
 - Problems we solve
 - Protocols (foundation) — deep dives
 - Three‑tier architecture
@@ -21,14 +23,24 @@ Last updated: 2025‑09‑03 08:00Z
 - End‑to‑end data flow and visuals
 - Five flagship use cases
 - Pilot in one week (checklist)
-- Spec links
+- Platforms overview
 - FAQ and Glossary
 - Community & contributions
 
 > Start here: protocols index → `research/02-protocol-specifications/l1-core-protocols/` • platforms overview → `gtcx-ecosystem-platforms/README.md` • e2e demo (PANX↔Cortex) → `gtcx-ecosystem-cognitive/README.md`
 
-## Executive summary
-GTCX is sovereign verification infrastructure for global trade. Five core protocols — TradePass, GeoTag, GCI, VaultMark, and PvP — convert claims into machine‑verifiable proofs that CRX, SGX, and AGX use to automate permits, listings, and settlement. The result is moving from weeks of paperwork and opaque intermediaries to same‑day approvals and sub‑second settlement.
+## Executive summary ✨
+GTCX is sovereign verification infrastructure for global trade. Five core protocols — TradePass, GeoTag, GCI, VaultMark, and PvP — turn real‑world statements and documents into independently verifiable proofs that CRX, SGX, and AGX use to automate permits, listings, and settlement. The result is moving from weeks of paperwork and opaque intermediaries to same‑day approvals and sub‑second settlement.
+
+### Core components at a glance
+- TradePass — Identity & authorization: verifies people/orgs; issues time‑boxed roles/entitlements.
+- GeoTag — Provenance evidence: cryptographic location/timestamping and device attestation.
+- GCI — Compliance & policy: machine‑evaluated eligibility and attestations.
+- VaultMark — Custody & audit: sealed, tamper‑evident chain‑of‑custody and ownership checks.
+- PvP — Settlement: atomic both‑or‑neither payment‑versus‑physical exchange.
+- PANX — Verification service: composes protocol artifacts into thresholded proofs for CRX/SGX/PvP.
+- Cortex — Analytics & anomalies: ingests proofs/events, summarizes signals, flags anomalies.
+- ANISA — Cultural intelligence: guidance that improves capture and interactions in the field.
 
 ### By the numbers
 | Signal | Value |
@@ -40,7 +52,7 @@ GTCX is sovereign verification infrastructure for global trade. Five core protoc
 | Permit issuance (CRX) | typical ≤ 6 hours |
 | Settlement (PvP) | atomic < 1 second; 10M+ daily tx scale |
 
-Outcomes (targets from the technical advisors primer):
+Outcomes (targets):
 - Identity: 3 weeks → ~30 seconds (TradePass)
 - Origin proof: “impossible” → instant (GeoTag)
 - Compliance eligibility: 3 weeks → ~2 minutes (GCI)
@@ -48,7 +60,7 @@ Outcomes (targets from the technical advisors primer):
 - Custody: continuous, sealed audit across transfers (VaultMark)
 - Settlement: atomic PvP < 1 second; scales to 10M+ daily transactions
 
-### System at a glance (from technical advisors primer)
+### System at a glance
 - TradePass: identity verification 3 weeks → ~30 seconds; capacity ~1M entities/day
 - GeoTag: origin proof from “impossible” → instant (cryptographic GPS signatures + device attestation)
 - GCI: compliance evaluation 3 weeks → ~2 minutes (policy engine + attestations)
@@ -61,6 +73,57 @@ Outcomes (targets from the technical advisors primer):
 - Exchanges, vaults, and banks integrating proof‑based, atomic settlement
 - Integrators and open‑source builders adopting a protocol‑first stack
 
+## What is needed for trade (and why)
+Buyers, regulators, and exchanges ask the same questions. Each answer must be verifiable.
+
+- **Who am I buying from?** TradePass proves the identity of people and organizations and grants time‑boxed roles (e.g., exporter) so authorization is portable and auditable.
+- **Where is the product sourced from?** GeoTag produces cryptographic location and timestamped evidence for production and transit events; VaultMark binds that evidence to sealed custody.
+- **Is it responsibly sourced and compliant?** GCI evaluates eligibility against jurisdictional policies using attached evidence; CRX turns the result into a permit with an audit trail.
+- **Do the goods I receive match what was listed?** VaultMark maintains an unbroken digital chain‑of‑custody and instant ownership checks; PANX provides proof thresholds per event type.
+- **Will payment and delivery happen together?** PvP performs atomic “both‑or‑neither” settlement using VaultMark custody references and PANX proof links, eliminating exposure.
+
+## Three‑tier architecture (overview) 🏗️
+1) Protocols — specifications and data contracts (research repo)
+2) Intelligence systems — PANX, Cortex, ANISA (this org)
+3) Platforms and apps — Exchanges and Field‑First Mobile Applications
+
+#### Protocols layer
+```mermaid
+flowchart LR
+  TP["TradePass"] --> GT["GeoTag"]
+  GT --> VM["VaultMark"]
+  VM --> PVP["PvP"]
+  GCI["GCI"] --> TP
+  GCI --> PVP
+```
+Protocols are composable, not strictly linear. TradePass authorizes capture, GeoTag produces signed evidence, VaultMark seals artifacts, and PvP gates settlement. GCI applies policies into both authorization and settlement.
+
+#### Intelligence systems layer 🧠
+```mermaid
+flowchart LR
+  ANISA["ANISA Cultural"] <--> PANX["PANX Verification"]
+  PANX -->|verified events / metrics| CORTEX["Cortex Analytics"]
+  CORTEX -.->|anomaly alerts / re‑verify triggers| PANX
+  CORTEX -.->|insights / topics| ANISA
+```
+Intelligence systems enrich, verify, and analyze protocol artifacts. ANISA adds cultural context; PANX turns evidence + policy into network proofs; Cortex aggregates and visualizes signals for operators.
+
+#### Platforms layer 🏛️
+```mermaid
+flowchart LR
+  CRX["CRX Regulatory"]
+  SGX["SGX Sovereign Exchange"]
+  AGX["AGX Global Exchange"]
+
+  CRX --> SGX
+  SGX --> CRX
+  SGX --> AGX
+  AGX --> SGX
+  CRX -.-> AGX
+  AGX -.-> CRX
+```
+Platforms interoperate rather than strictly chain. CRX feeds sovereign approval/compliance into SGX; SGX returns market and custody events back to CRX. AGX connects multiple SGX instances to international buyers; limited CRX↔AGX links exist for export controls and revenue reporting.
+
 ## Actors and the problems we solve
 | Actor | Pain today | What GTCX provides | Outcomes (targets) |
 | --- | --- | --- | --- |
@@ -72,9 +135,20 @@ Outcomes (targets from the technical advisors primer):
 | Banks/PSPs & settlement rails | Reconciliation risk; chargebacks; manual compliance | PvP orchestration; proof references; policy gating | Both‑or‑neither finality; automated compliance |
 | Auditors & civil society | ESG unverifiable; after‑the‑fact investigations | Sealed artifacts (VaultMark), location proofs, policy history | Real‑time verification; credible oversight |
 
-## Day in the life (epic, but real)
+## Day in the life (epic, but real) 📽️
 
 ### Producer (cooperative lead)
+<sub>
+<ol>
+<li>Register cooperative in TradePass (~30s).</li>
+<li>Pair GeoTag device and capture site/batch evidence.</li>
+<li>GCI evaluates eligibility (~2 min).</li>
+<li>CRX issues permit (≤ 6h, same‑day).</li>
+<li>Create lot and seal custody in VaultMark.</li>
+<li>List eligible lot on SGX.</li>
+<li>Execute atomic settlement via PvP (< 1s).</li>
+</ol>
+</sub>
 ```mermaid
 sequenceDiagram
   participant VIA as "VIA App (Producer)"
@@ -101,11 +175,9 @@ sequenceDiagram
   Note over PVP: < 1s
 ```
 
-#### Diagram legend
-- Solid arrows: action or request between participants
-- Dashed arrows: non‑blocking signal, reference, or gate
-- Notes: "Note over X" indicates timing or context for that participant
-- Quoted participant names include roles for clarity (e.g., "CRX (Permits)")
+<sub>
+<b>Diagram legend:</b> Solid arrows = action/request; dashed arrows = signal/reference/gate; notes = "Note over X" for timing/context; quoted names include roles (e.g., "CRX (Permits)").
+</sub>
 
 ### Regulator (CRX operator)
 - Intake arrives with TradePass identity and GCI eligibility attached
@@ -116,6 +188,16 @@ sequenceDiagram
 - Typical path: eligibility received ~2 min; permit turnaround same‑day (≤ 6h)
 
 ### Buyer (international)
+<sub>
+<ol>
+<li>Discover listings on SGX (federated to AGX).</li>
+<li>Request PANX proof for the lot.</li>
+<li>Review proof details (achieved/percentage/hints).</li>
+<li>Lock funds and initiate PvP.</li>
+<li>Verify custody reference via VaultMark.</li>
+<li>Execute both‑or‑neither settlement.</li>
+</ol>
+</sub>
 ```mermaid
 sequenceDiagram
   participant AGX as "AGX (Global)"
@@ -133,12 +215,17 @@ sequenceDiagram
 ```
 
 ## Problems we solve
-- Fragmented identity and inconsistent policy enforcement across jurisdictions
-- Location/provenance fraud and unverifiable documentation
-- Trust bottlenecks that slow approvals, trading, and settlement
-- Audit gaps and verification “washing” through custody chains
+Trade today fails in predictable ways. The GTCX stack addresses each failure with a concrete, verifiable mechanism.
 
-### Market reality (from primer)
+- **Identity without portability**: Registries, paper IDs, and manual KYC do not travel across agencies or borders. Every jurisdiction restarts the process, creating weeks‑long queues and inconsistent permissions. TradePass issues cryptographically verifiable identities and time‑boxed roles so authorization is portable, least‑privilege, and auditable.
+
+- **Provenance without proof**: Documents move faster than goods. By the time a lot reaches the port, origin can be disputed, lots can be mixed, and there is no independent way to verify claims. GeoTag anchors events to cryptographic location and time, while VaultMark binds those events to sealed digital custody so provenance can be checked instantly, without calling the source.
+
+- **Policy without consistency**: Rules are clear on paper but applied differently in practice. Interpretations diverge across desks and regions, creating bottlenecks, leakage, and unpredictable outcomes. GCI evaluates eligibility the same way every time against explicit policies, and CRX turns those decisions into transparent workflows with measurable SLAs.
+
+- **Settlement without finality**: Payment and delivery occur on separate rails, leaving counterparties exposed and disputes to escalate. PvP settles “both‑or‑neither” atomically, using VaultMark custody references and PANX proof links so execution is instant, correct, and independently auditable.
+
+### Market reality
 | Metric | Current State | Impact |
 | ---| ---| --- |
 | Annual commodity trade | ~$13T | Massive addressable scope |
@@ -148,18 +235,23 @@ sequenceDiagram
 | Digital infrastructure | Paper/PDF | 2025 still manual |
 
 ### Structural failures
-- Identity without trust (weeks to verify; rampant fraud)
-- Location without proof (origin mixing; unverifiable chain)
-- Compliance without speed (rules change; processes don’t)
-- Settlement without certainty (intermediaries; failed trades)
+| Structural failure | Description |
+| --- | --- |
+| Identity without trust | Weeks to verify; rampant fraud |
+| Location without proof | Origin mixing; unverifiable chain |
+| Compliance without speed | Rules change; processes don’t |
+| Settlement without certainty | Intermediaries; failed trades |
 
 ## Protocols (foundation)
 Core protocol specifications live in `gtcx-ecosystem-research/02-protocol-specifications/`.
-- TradePass — identity & authorization (DIDs/VCs, roles, entitlements)
-- GCI — compliance & policy (credentials, attestations, scoring)
-- GeoTag — evidence (cryptographic location, timestamping, device attestation)
-- VaultMark — audit (sealed receipts, custody chain)
-- PvP — settlement (post‑verification, atomic payment‑versus‑physical)
+
+| Protocol | Purpose | Key elements |
+| --- | --- | --- |
+| TradePass | Identity & authorization | DIDs/VCs; roles; entitlements |
+| GCI | Compliance & policy | credentials; attestations; scoring |
+| GeoTag | Evidence | cryptographic location; timestamping; device attestation |
+| VaultMark | Audit | sealed receipts; custody chain |
+| PvP | Settlement | post‑verification; atomic payment‑versus‑physical |
 
 Transport and data contracts use JSON Schema with versioned `$id`.
 
@@ -170,7 +262,7 @@ Transport and data contracts use JSON Schema with versioned `$id`.
 - VaultMark (Audit): physical‑digital binding (NFC/RFID), digital twins, immutable custody; prevents verification washing
 - PvP (Settlement): atomic payment‑versus‑physical; settlement only when proof+policy pass
 
-#### Protocol outcomes (from primer)
+#### Protocol outcomes
 | Layer | Before | After |
 | --- | --- | --- |
 | TradePass | 3 weeks manual checks | ~30 seconds verification |
@@ -181,9 +273,10 @@ Transport and data contracts use JSON Schema with versioned `$id`.
 
 <!-- Removed high-level A→B→C diagram to reduce redundancy -->
 
-### Spec links
-- CRX/SGX Exchange Integration: `research/02-protocol-specifications/l3-exchange-layer/crx-sgx-exchange-integration.md`
-- AGX (Authenticated Global Exchange): `research/02-protocol-specifications/l3-exchange-layer/agx-authenticated-global-exchange.md`
+### Platforms overview (who it’s for and why it matters)
+- **CRX — Regulatory Exchange**: for ministries and agencies to automate permits and apply policy consistently. Solves long queues, leakage, and inconsistent approvals with transparent workflows and SLAs. [CRX README](gtcx-ecosystem-platforms/README.md)
+- **SGX — Sovereign National Exchange**: for domestic buyers, traders, vaults, and banks to list and settle proof‑backed lots. Solves opaque provenance and counterparty risk. [SGX README](gtcx-ecosystem-platforms/README.md)
+- **AGX — Authenticated Global Exchange**: for international buyers and exporters to discover and trade across federated SGX markets. Solves fragmented discovery and cross‑border execution. [AGX README](gtcx-ecosystem-platforms/README.md)
 
 ### Verification layers → platforms (visual)
 ```mermaid
@@ -195,7 +288,7 @@ flowchart LR
     VM["VaultMark"]
     PVP["PvP"]
   end
-  subgraph RS["Reference Services"]
+  subgraph RS["Intelligence Systems"]
     PANX["PANX Verification"]
     ANISA["ANISA Cultural"]
     CORTEX["Cortex Analytics"]
@@ -243,10 +336,10 @@ flowchart LR
 - Seal — tamper‑evident record preserved for audit
 - Atomic settlement — payment/delivery only complete together
 
-## Three‑tier architecture
+## Three‑tier architecture 🏗️
 1) Protocols — specifications and data contracts (research repo)
-2) Reference services — PANX, Cortex, ANISA (this org)
-3) Platforms & apps — open‑source frontends, terminals, and integrations
+2) Intelligence systems — PANX, Cortex, ANISA (this org)
+3) Platforms and apps — Exchanges and Field‑First Mobile Applications
 
 #### Protocols layer
 ```mermaid
@@ -259,7 +352,7 @@ flowchart LR
 ```
 Protocols are composable, not strictly linear. TradePass authorizes capture, GeoTag produces signed evidence, VaultMark seals artifacts, and PvP gates settlement. GCI applies policies into both authorization and settlement.
 
-#### Reference services layer
+#### Intelligence systems layer
 ```mermaid
 flowchart LR
   ANISA["ANISA Cultural"] <--> PANX["PANX Verification"]
@@ -267,7 +360,25 @@ flowchart LR
   CORTEX -.->|anomaly alerts / re‑verify triggers| PANX
   CORTEX -.->|insights / topics| ANISA
 ```
-Reference services enrich, verify, and analyze protocol artifacts. ANISA adds cultural context; PANX turns evidence + policy into network proofs; Cortex aggregates and visualizes signals for operators.
+Intelligence systems enrich, verify, and analyze protocol artifacts. ANISA adds cultural context; PANX turns evidence + policy into network proofs; Cortex aggregates and visualizes signals for operators.
+
+##### Product narratives (who it’s for, what it solves, how it feels)
+- **ANISA — Cultural Intelligence (field‑first)**
+  A cooperative lead opens the VIA app to register a new site. Before any photo or coordinate is taken, ANISA whispers the local terms that build trust, the questions to ask, and the proof to capture (“include the co‑op board stamp; take a wide shot of the entrance; avoid market‑day crowding at noon”). During capture it flags risks (“vendor IDs don’t match roster”) and suggests phrasing that de‑escalates (“ask for the lot book, not the receipt”). The guidance is saved alongside the artifacts so when TradePass and GeoTag submit to CRX, the evidence reads correctly the first time—less back‑and‑forth, fewer rejections.
+  In short: ANISA improves the human layer so the technical layer (TradePass, GeoTag, VaultMark) lands cleanly.
+
+- **PANX — Verification (not a protocol)**
+  - Who: CRX permit approvers, SGX listing desks, banks settling PvP.
+  - Problem: evidence exists but trust is subjective and slow; stakeholders need a neutral, repeatable verdict.
+  - Story: given a lot and its artifacts (TradePass roles, GeoTag evidence, VaultMark custody, GCI eligibility), PANX returns a proof: `{ achieved, percentage, hints[], dissent[] }`. CRX reads the proof to gate permits; SGX uses it to list; PvP references it to settle.
+  - Maps to: “Permit issuance”, “Milestone‑based payment”, “Depart/arrive verification”, “Pilot — Verify”.
+  - Note: PANX is a service that consumes protocol artifacts to produce network proofs.
+
+- **Cortex — Analytics & Anomalies (operations room)**
+  - Who: regulators’ ops centers, exchange supervisors, logistics leads.
+  - Problem: signals are scattered; trends and outliers are invisible until too late.
+  - Story: Cortex ingests PANX proofs and custody/market telemetry, produces summaries, and flags anomalies (e.g., unusual dwell time). It can trigger PANX re‑verify and feeds operator dashboards.
+  - Maps to: “Depart/arrive verification” (real‑time alerts), “Dispute packet” (complete trail), “Pilot — Report”.
 
 ##### What actually happens (inputs → processing → outputs)
 - ANISA (enrichment)
@@ -340,7 +451,8 @@ flowchart LR
 ```
 Platforms interoperate rather than strictly chain. CRX feeds sovereign approval/compliance into SGX; SGX returns market and custody events back to CRX. AGX connects multiple SGX instances to international buyers; limited CRX↔AGX links exist for export controls and revenue reporting.
 
-## Reference services (live repos)
+## Intelligence systems (live repos)
+<sub>[Back to top](#table-of-contents-)</sub>
 - PANX (Oracle/Verification): `gtcx-ecosystem-cognitive/panx` — consensus, proofs, forward to Cortex
 - Cortex (Analytics): `gtcx-ecosystem-cognitive/cortex` — ingest, summary, anomalies
 - ANISA (Cultural Intelligence): `gtcx-ecosystem-anisa` — analyze/assess endpoints for enrichment
@@ -348,6 +460,7 @@ Platforms interoperate rather than strictly chain. CRX feeds sovereign approval/
 Each service includes: README, user/agent guides, runbooks, deploy guides, JSON Schemas, and changelogs.
 
 ## Open‑source platforms & tooling
+<sub>[Back to top](#table-of-contents-)</sub>
 - CRX — government workflow automation & regulatory processing
 - SGX — sovereign national exchange & settlement
 - AGX — authenticated global exchange (international marketplace)
@@ -361,6 +474,7 @@ Each service includes: README, user/agent guides, runbooks, deploy guides, JSON 
 - See: `gtcx-ecosystem-platforms/README.md` (platforms overview and app shells)
 
 ### End‑to‑end trade process (custody before SGX)
+<sub>[Back to top](#table-of-contents-)</sub>
 ```mermaid
 flowchart TD
   CRX["CRX Registration & Onboarding"] --> TP["TradePass Identity"]
@@ -381,6 +495,7 @@ flowchart TD
 ```
 
 ### Verification gates (at a glance)
+<sub>[Back to top](#table-of-contents-)</sub>
 ```mermaid
 flowchart LR
   TP["TradePass"] --> GT["GeoTag"] --> GCI["GCI Eligibility"] --> VM["VaultMark Custody"] --> PVP["PvP"]
@@ -390,9 +505,21 @@ flowchart LR
 ```
 
 ### What this enables (plain English)
+<sub>[Back to top](#table-of-contents-)</sub>
 - A farmer can become trade‑eligible the same day (TradePass, GeoTag, GCI, CRX), list nationally (SGX), and settle with an international buyer atomically (PvP) — with every custody move sealed (VaultMark) and every step independently verifiable.
 
 ### End‑to‑end sequence (eligibility first, then trade)
+<sub>[Back to top](#table-of-contents-)</sub>
+<sub>
+<ol>
+<li>CRX registers and issues TradePass.</li>
+<li>TradePass authorizes GeoTag capture.</li>
+<li>GeoTag submits signed evidence to GCI.</li>
+<li>GCI returns eligibility to TradePass/CRX.</li>
+<li>When ready: create VaultMark custody lot.</li>
+<li>PvP reads custody/proof references and settles atomically.</li>
+</ol>
+</sub>
 ```mermaid
 sequenceDiagram
   participant CRX as "CRX (register)"
@@ -414,7 +541,8 @@ sequenceDiagram
   PVP->>PVP: Atomic settlement
 ```
 
-### “Trade in ~6 hours” (from primer)
+### “Trade in ~6 hours”
+<sub>[Back to top](#table-of-contents-)</sub>
 - Identity verified (TradePass): ~30 seconds
 - Site/production evidence (GeoTag): instant
 - Compliance eligibility (GCI): ~2 minutes
@@ -423,6 +551,7 @@ sequenceDiagram
 - Atomic settlement (PvP): < 1 second when trade executes
 
 ### Performance snapshots
+<sub>[Back to top](#table-of-contents-)</sub>
 VaultMark (chain of custody)
 
 | Before | After (VaultMark) |
@@ -453,6 +582,12 @@ PvP (settlement)
   - Environment override for schema paths in containers: see `panx/service/app/validation.py`
 
 ## Deploy
+- Try it now (local, copy‑paste)
+  - PANX verify (replace API key and URL):
+    - `curl -s -H "Authorization: Bearer $PANX_API_KEY" -H "Content-Type: application/json" -d '{"event_type":"lot_eligibility","lot_id":"vm_demo_001"}' https://your-panx-host/verify | jq`
+  - Cortex ingest (replace URL):
+    - `curl -s -H "Content-Type: application/json" -d '{"event":"demo_event","ts":1234567890}' https://your-cortex-host/ingest | jq`
+- Start in Telegram (TradeBox): search for the official bot handle and tap Start
 - Local Docker Compose (PANX + Cortex + DB)
   - Compose: `gtcx-ecosystem-cognitive/docker-compose.yml`
   - PANX service: `gtcx-ecosystem-cognitive/panx/service/README.md`
@@ -466,6 +601,39 @@ PvP (settlement)
   - Terraform modules for VM + DNS + secrets
 
 ## Roadmap (high‑level)
+### Roadmap at a glance (visual)
+```mermaid
+flowchart LR
+  subgraph NOW["Now — Foundational"]
+    A1["Protocol hardening & schema snapshots"]
+    A2["Compatibility CI (schemas + fixtures)"]
+    A3["Reference SDKs (TS/Py)"]
+  end
+
+  subgraph NEXT["Next — Interoperability & Operations"]
+    B1["TradePass federation"]
+    B2["PvP multi‑rail connectors"]
+    B3["GeoTag secure attestation"]
+    B4["VaultMark smart seals & twins"]
+    B5["Persistence & retention (partitioning/TTL)"]
+    B6["Observability (metrics, SLOs, tracing)"]
+  end
+
+  subgraph LATER["Later — Agentic & Pilots"]
+    C1["PANX re‑verify plans & dynamic thresholds"]
+    C2["Cortex anomaly watchers & proposals"]
+    C3["Pilots & corridor playbooks"]
+    C4["Telegram onboarding funnels"]
+  end
+
+  A1 --> A2 --> A3 --> B1
+  B1 --> B2 --> B3 --> B4 --> B5 --> B6 --> C1 --> C2 --> C3 --> C4
+```
+
+#### Now → Next → Later (concise)
+- Now: protocol hardening; schema compatibility CI; reference SDKs.
+- Next: federation, multi‑rail settlement, secure attestation, smart seals, persistence/retention, observability.
+- Later: PANX/Cortex agentic behaviors; corridor pilots; onboarding funnels.
 - Protocol hardening & specification snapshots
   - TradePass, GCI, GeoTag, VaultMark, PvP: stabilize core semantics and data contracts
   - Snapshot cadence and change control (proposal → review → RFC → snapshot)
@@ -506,8 +674,52 @@ MIT License
 Contributions & governance: open issues/PRs against component repos; follow per‑component CHANGELOGs for releases (`gtcx-ecosystem-cognitive/CHANGELOG.md`, `gtcx-ecosystem-anisa/CHANGELOG.md`, `gtcx-ecosystem-cognitive/panx/changelog.md`, `gtcx-ecosystem-cognitive/cortex/changelog.md`).
 
 ## Telegram onboarding (fast path)
-- Telegram bot utilities and onboarding flows:
-  - `gtcx-ecosystem-shared/utilities/gtcx-utility-telegrambot/README.md`
-  - `gtcx-ecosystem-shared/utilities/gtcx-utility-tradedesk/README.md`
-  - Master onboarding playbook: `gtcx-ecosystem-shared/utilities/gtcx-utility-tradedesk/agentic/gtcx-master-onboarding.md`
-- Typical flow: chat‑based TradePass issuance → GeoTag device pairing → basic compliance prompts → CRX pre‑registration → links into SGX/AGX portals when eligible.
+
+### TradeBox: chat‑first onboarding that meets users where they are
+TradeBox is our Telegram experience that gets producers, exporters, and officials live in hours—not weeks. It turns identity, provenance, and permits into a guided conversation that runs on any phone, in low bandwidth, in local languages.
+
+- Bot and utilities: [Telegram bot README](gtcx-ecosystem-shared/utilities/gtcx-utility-telegrambot/README.md) · [TradeDesk README](gtcx-ecosystem-shared/utilities/gtcx-utility-tradedesk/README.md)
+- Strategy (narrative): [Telegram bot strategy](gtcx-ecosystem-specs/telegram/telegram-bot-strategy.md) · Commands and flows: [Bot commands](gtcx-ecosystem-specs/telegram/gtcx-bot-commands-readme.md)
+
+### User journey (TradeBox)
+```mermaid
+sequenceDiagram
+  participant User as "User"
+  participant BOT as "GTCX TradeBox (Telegram)"
+  participant TP as "TradePass"
+  participant GT as "GeoTag"
+  participant GCI as "GCI"
+  participant CRX as "CRX (Permits)"
+  participant SGX as "SGX"
+  participant AGX as "AGX"
+
+  User->>BOT: /start · choose language and role
+  BOT->>User: Explain value, privacy, next steps
+  User->>BOT: Submit ID photos (guided)
+  BOT->>TP: Verify ID and issue credentials
+  Note over TP: ~30s typical
+
+  BOT->>User: Pair GeoTag device / capture location evidence
+  User->>BOT: Share location & batch context
+  BOT->>GT: Verify cryptographic location & timestamp
+  Note over GT: instant
+
+  BOT->>GCI: Eligibility Q&A with attached evidence
+  GCI-->>BOT: Eligibility result and requirements
+  BOT->>CRX: Pre‑registration + artifacts
+  CRX-->>User: Permit status link (when eligible)
+
+  BOT-->>SGX: Create listing shell (when permitted)
+  SGX-->>AGX: Federated discovery
+```
+
+What you walk away with
+- TradePass identity and roles you can show anywhere (QR or code)
+- GeoTag setup and a first signed location proof
+- Eligibility status and a CRX application in flight
+- If permitted: a listing shell in SGX discoverable via AGX
+
+Operator view (why it works at scale)
+- Languages, voice, and offline queuing reduce friction dramatically
+- Structured captures push clean artifacts into TradePass/GeoTag/VaultMark
+- PANX/Cortex hooks let ops monitor completion, anomalies, and progress
