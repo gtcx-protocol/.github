@@ -54,12 +54,7 @@ Transport and data contracts use JSON Schema with versioned `$id`.
 - VaultMark (Audit): physical‑digital binding (NFC/RFID), digital twins, immutable custody; prevents verification washing
 - PvP (Settlement): atomic payment‑versus‑physical; settlement only when proof+policy pass
 
-```mermaid
-flowchart TD
-  A[Protocols] --> B[Reference Services]
-  B --> C[Open Platforms]
-  C --> D[Applications & Communities]
-```
+<!-- Removed high-level A→B→C diagram to reduce redundancy -->
 
 ### Spec links
 - CRX/SGX Exchange Integration: `research/02-protocol-specifications/l3-exchange-layer/crx-sgx-exchange-integration.md`
@@ -128,32 +123,27 @@ flowchart LR
 2) Reference services — PANX, Cortex, ANISA (this org)
 3) Platforms & apps — open‑source frontends, terminals, and integrations
 
+#### Protocols layer
 ```mermaid
 flowchart LR
-  subgraph Protocols
-    L1[TradePass]
-    L2[GCI]
-    L3[GeoTag]
-    L4[VaultMark]
-    L5[PvP]
-  end
-  subgraph Reference Services
-    S1[PANX\nVerification]
-    S2[ANISA\nCultural Intelligence]
-    S3[Cortex\nAnalytics]
-  end
-  subgraph Platforms
-    CRX[CRX Regulatory]
-    SGX[SGX Sovereign Exchange]
-    AGX[AGX Global Exchange]
-  end
-  L1 --> S1
-  L2 --> S1
-  L3 --> S1
-  L4 --> S1
-  L5 --> S1
-  S2 -. enrich .-> S1
-  S1 --> S3
+  TP["TradePass"] --> GT["GeoTag"]
+  GT --> VM["VaultMark"]
+  VM --> PVP["PvP"]
+  GCI["GCI"] --> TP
+  GCI --> PVP
+```
+
+#### Reference services layer
+```mermaid
+flowchart LR
+  ANISA["ANISA Cultural"] --> PANX["PANX Verification"]
+  PANX --> CORTEX["Cortex Analytics"]
+```
+
+#### Platforms layer
+```mermaid
+flowchart LR
+  CRX["CRX Regulatory"] --> SGX["SGX Sovereign Exchange"] --> AGX["AGX Global Exchange"]
 ```
 
 ## Reference services (live repos)
