@@ -1,92 +1,64 @@
-# GTCX Protocol Ecosystem
+# GTCX Verification Layers (Layer‑1 Protocols)
 
-A public home for the GTCX protocols, reference services, and open‑source platforms.
+Public home for GTCX’s core verification protocols and how they work independently and together.
 
-Updated: 2025-09-02
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Updated](https://img.shields.io/badge/Updated-2025--09--03-success)
+![Protocols](https://img.shields.io/badge/Protocols-5-blue)
+![Sovereignty](https://img.shields.io/badge/Design-Sovereignty--Preserving-brightgreen)
 
-## Why GTCX
-GTCX is an open protocol stack for trustworthy global trade. It prioritizes verifiable events, culturally aware intelligence, and practical tools that work across regions, with a focus on the Global South.
+Last updated: 2025‑09‑03
 
-## Protocols (foundation)
-Canonical specifications live in the research repo:
-- PANX Oracle Consensus — role‑weighted consensus, event‑type thresholds, auditable proofs
-- Governance/Compliance/Identity — building blocks for compliant trade flows
-- Transport & data contracts — JSON Schema with versioned `$id`
+## Table of contents
+- Executive summary
+- Who this is for
+- Problems we solve
+- The five verification layers (deep dives)
+- How they fit together (diagrams)
+- Platforms mapping (CRX, SGX, AGX)
+- Five flagship use cases
+- Pilot in one week (checklist)
+- Spec links
+- FAQ
+- Glossary
+- Contributions & governance
 
-Key specs:
-- PANX Oracle Consensus — https://github.com/gtcx-protocol/gtcx-ecosystem-research/tree/main/02-protocol-specifications/l1-core-protocols
-- AGI / Authenticated Global Intelligence — https://github.com/gtcx-protocol/gtcx-ecosystem-research/tree/main/03-intelligence-systems
+> Start here: protocols index → `research/02-protocol-specifications/l1-core-protocols/` • platforms overview → `gtcx-ecosystem-platforms/README.md` • e2e demo (PANX↔Cortex) → `gtcx-ecosystem-cognitive/README.md`
 
-```mermaid
-flowchart TD
-  A[Protocols] --> B[Reference Services]
-  B --> C[Open Platforms]
-  C --> D[Applications & Communities]
-```
+---
 
-## Three‑tier architecture
-1) Protocols — specifications and data contracts (research)
-2) Reference services — PANX, ANISA, Cortex (services)
-3) Platforms & apps — terminals, dashboards, integrations (platforms)
+## Executive summary
+GTCX standardizes how facts are verified, approved, and preserved in global trade. Five core protocols (TradePass, GCI, GeoTag, VaultMark, PvP) produce sovereign, cryptographically verifiable artifacts. Platforms (CRX, SGX, AGX) consume these artifacts to automate permits, markets, and cross‑border settlement.
 
-```mermaid
-flowchart LR
-  subgraph Protocols
-    P1[PANX Consensus]
-    P2[Compliance/Identity]
-  end
-  subgraph Reference Services
-    S1[PANX\nVerification]
-    S2[ANISA\nCultural Intelligence]
-    S3[Cortex\nAnalytics]
-  end
-  subgraph Platforms
-    UI1[Terminal]
-    UI2[Mobile/Web]
-  end
-  P1 --> S1
-  P2 --> S1
-  S1 --> S3
-  S2 -. enrich .-> S1
-  S3 --> UI1
-  S1 --> UI1
-  UI1 --> Communities
-```
+## Who this is for
+- Governments and regulators seeking sovereignty‑preserving digital infrastructure
+- Verified producers and cooperatives needing market access with trust guarantees
+- Exchanges, vaults, and banks integrating proof‑based settlement
+- Integrators and open‑source builders adopting a protocol‑first stack
 
-## Reference services (live)
-- PANX (Oracle/Verification) — consensus, proofs, forward to Cortex
-  - https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/panx
-- Cortex (Analytics) — ingest, summary, anomalies
-  - https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/cortex
-- ANISA (Cultural Intelligence) — analyze/assess endpoints for enrichment
-  - https://github.com/gtcx-protocol/gtcx-ecosystem-anisa
+## Problems we solve
+- Who is allowed to do what? (access & roles)
+- Who are the parties? Are they compliant? (identity & policy)
+- Did a real event happen, where and when? (location & proofs)
+- Can we settle safely across payment rails? (atomic settlement)
+- Do we have tamper‑evident receipts for audit? (sealed records)
 
-Each service includes: README, user/agent guides, runbooks, deploy guides, JSON Schemas, and changelogs.
+---
 
-## Open‑source platforms
-- Platform UIs (terminal/dashboards) — https://github.com/gtcx-protocol/gtcx-ecosystem-platforms
-- API gateway/adapters — https://github.com/gtcx-protocol/gtcx-ecosystem-api-gateway
-- Research & specs — https://github.com/gtcx-protocol/gtcx-ecosystem-research
+## The five verification layers (deep dives)
 
-## Contracts and versioning
-- JSON Schema with `$id` across services
-- Response header `X-Contract-Version`
-- Compatibility checks included (`contracts_compat_check.py` in cognitive repo)
+### 1) Identity & Authorization — TradePass
+- What: roles, scopes, entitlements; who is allowed to act.
+- Why: least‑privilege access, corridor rules, time‑boxed grants, transparent governance.
+- Key ideas: DIDs/VCs, dynamic grants, role catalogs, reputation.
+- Works independently: gate any API/UI or operational action.
+- Composes with: GCI (grant by credentials), PANX (weights by role), PvP (initiate/approve permissions).
+- Spec: https://github.com/gtcx-protocol/gtcx-ecosystem-research/blob/main/02-protocol-specifications/l1-core-protocols/tradepass-identity-specification.md
 
-## Quickstart
-- PANX service — https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/panx
-- Cortex mock — https://github.com/gtcx-protocol/gtcx-ecosystem-cognitive/tree/main/cortex
-- ANISA API — https://github.com/gtcx-protocol/gtcx-ecosystem-anisa
-
-## Roadmap (high‑level)
-- Protocol hardening and specification snapshots
-- Schema‑first development with version guarantees
-- Managed Postgres/Timescale persistence and retention
-- Observability: metrics, dashboards, alerting
-- Agentic behaviors: PANX (borderline re‑verify plans), Cortex (watchers & action proposals)
-
-## Community
-- Issues and discussions in each repo
-- Contributions welcome: docs, code, research
-
-MIT License
+### 2) Compliance & Policy — GCI
+- What: algorithmic compliance, attestations, policy checks, predictive risk.
+- Why: make “who” and “which rules apply” transparent, consistent, and auditable.
+- Key ideas: credential issuers, multi‑factor scoring, jurisdictional policies.
+- Works independently: evaluate identity and compliance signals for any workflow.
+- Composes with: TradePass (grant roles), PANX (validator classes/weights), PvP (regulatory gates).
+- Spec: https://github.com/gtcx-pro
