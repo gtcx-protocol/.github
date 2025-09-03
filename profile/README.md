@@ -76,28 +76,28 @@ Outcomes (targets from the technical advisors primer):
 ### Producer (cooperative lead)
 ```mermaid
 sequenceDiagram
-  participant VIA as VIA App (Producer)
-  participant TP as TradePass
-  participant GT as GeoTag
-  participant GCI as GCI
-  participant CRX as CRX (Permits)
-  participant VM as VaultMark
-  participant SGX as SGX
-  participant PVP as PvP
+  participant VIA as "VIA App (Producer)"
+  participant TP as "TradePass"
+  participant GT as "GeoTag"
+  participant GCI as "GCI"
+  participant CRX as "CRX (Permits)"
+  participant VM as "VaultMark"
+  participant SGX as "SGX"
+  participant PVP as "PvP"
 
   VIA->>TP: Register cooperative (face + ID)
-  Note right of TP: ~30s
-  VIA->>GT: Pair device; capture site & batch evidence
-  Note right of GT: instant proofs
+  Note over TP: ~30s
+  VIA->>GT: Pair device and capture site and batch evidence
+  Note over GT: instant proofs
   GT->>GCI: Submit evidence for eligibility
-  Note right of GCI: ~2 min
+  Note over GCI: ~2 min
   GCI-->>CRX: Eligibility attestation
   CRX->>VIA: Permit issued
-  Note right of CRX: ≤ 6h (same‑day)
+  Note over CRX: ≤ 6h (same‑day)
   VIA->>VM: Create lot; seal custody
   VM->>SGX: List eligible lot
   SGX-->>PVP: Execute trade with atomic settlement
-  Note right of PVP: < 1s
+  Note over PVP: < 1s
 ```
 
 ### Regulator (CRX operator)
@@ -111,11 +111,11 @@ sequenceDiagram
 ### Buyer (international)
 ```mermaid
 sequenceDiagram
-  participant AGX as AGX (Global)
-  participant SGX as SGX (National)
-  participant VM as VaultMark
-  participant PANX as PANX (Proofs)
-  participant PVP as PvP
+  participant AGX as "AGX (Global)"
+  participant SGX as "SGX (National)"
+  participant VM as "VaultMark"
+  participant PANX as "PANX (Proofs)"
+  participant PVP as "PvP"
 
   AGX->>SGX: Discover proof‑backed listings (federated)
   SGX-->>PANX: Request lot eligibility proof
@@ -388,12 +388,12 @@ flowchart LR
 ### End‑to‑end sequence (eligibility first, then trade)
 ```mermaid
 sequenceDiagram
-  participant CRX as CRX (register)
-  participant TP as TradePass
-  participant GT as GeoTag
-  participant GCI as GCI (eligibility)
-  participant VM as VaultMark (at trade)
-  participant PVP as PvP (settle)
+  participant CRX as "CRX (register)"
+  participant TP as "TradePass"
+  participant GT as "GeoTag"
+  participant GCI as "GCI (eligibility)"
+  participant VM as "VaultMark (at trade)"
+  participant PVP as "PvP (settle)"
 
   CRX->>TP: Onboard & issue TradePass
   TP->>GT: Authorize capture & bind identity
