@@ -12,7 +12,8 @@ Last updated: 2025‑09‑03 08:00Z
 
 ## Table of contents 🧭
 - 1. Overview
-- 2. Problems and protocols
+- 2. Problems and pro- Settlement: atomic PvP < 1 second; scales to 10M+ daily transactions
+tocols
 - 3. Architecture and flows
 - 4. Using the system
 - 5. Reference
