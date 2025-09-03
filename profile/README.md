@@ -13,6 +13,7 @@ Last updated: 2025‑09‑03 08:00Z
 ## Table of contents
 - Executive summary
 - Who this is for
+- Day in the life
 - Problems we solve
 - Protocols (foundation) — deep dives
 - Three‑tier architecture
@@ -99,6 +100,12 @@ sequenceDiagram
   SGX-->>PVP: Execute trade with atomic settlement
   Note over PVP: < 1s
 ```
+
+#### Diagram legend
+- Solid arrows: action or request between participants
+- Dashed arrows: non‑blocking signal, reference, or gate
+- Notes: "Note over X" indicates timing or context for that participant
+- Quoted participant names include roles for clarity (e.g., "CRX (Permits)")
 
 ### Regulator (CRX operator)
 - Intake arrives with TradePass identity and GCI eligibility attached
