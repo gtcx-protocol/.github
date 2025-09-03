@@ -18,8 +18,6 @@ The GTCX Protocols Ecosystem consists of **FIVE** essential protocols that work 
 4) VaultMark — Audit
 5) PvP — Settlement (post‑verification)
 
-Note: PANX is a reference verification service that consumes protocol artifacts to produce network proofs; it is not itself a protocol.
-
 #### **1. TradePass Protocol** (`gtcx-protocols-tradepass/`)
 - **Digital Identity Management**: Secure identity creation and verification
 - **Trading Credentials**: Digital credential issuance and validation
