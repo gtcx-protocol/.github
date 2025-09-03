@@ -95,7 +95,7 @@ sequenceDiagram
   GCI-->>CRX: Eligibility attestation
   CRX->>VIA: Permit issued
   Note over CRX: ≤ 6h (same‑day)
-  VIA->>VM: Create lot; seal custody
+  VIA->>VM: Create lot and seal custody
   VM->>SGX: List eligible lot
   SGX-->>PVP: Execute trade with atomic settlement
   Note over PVP: < 1s
