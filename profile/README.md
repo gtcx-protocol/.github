@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="gtcx-ecosystem-design/media/gtcx-header.jpg" alt="GTCX — Infrastructure for Global Trade" width="100%">
-</p>
+
 
 # GTCX Protocol Ecosystem
 
